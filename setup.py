@@ -4,15 +4,15 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="pdfwatermark-mvartanyan",
+    name="simple-pdf-watermark",
     version="0.0.1",
-    author="Michael Vartanyan",
-    author_email="mickiedesman@gmail.com",
+    author="wengfan",
+    author_email="fan1130work@163.com",
     description="A utility to watermark PDF files with "
                 "custom text using command line",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/mvartanyan/pdfwatermark",
+    url="",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",

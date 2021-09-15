@@ -30,10 +30,12 @@ import click
               help='Y coordinate')
 @click.option('-d', '--destination-file-name', default='',
               help='Destination file, by default files are modified in place')
+@click.option('-p', '--page-number', default='1',
+              help='page number')
 def annotate(filename, watermark, regex, font_name, font_size, color, opacity,
-             x, y, destination_file_name):
+             x, y, destination_file_name, page_number):
+    print ("page number:", page_number)
     mask_stream = BytesIO()
-
     watermark_canvas = canvas.Canvas(mask_stream, pagesize=A4)
     watermark_canvas.setFont(font_name, font_size)
     r, g, b = hex_to_rgb(color)
@@ -43,8 +45,18 @@ def annotate(filename, watermark, regex, font_name, font_size, color, opacity,
     if regex:
         groups = match(regex, filename)
         watermark = watermark.format(*groups.groups())
+    watermark_canvas.rotate(10)
+    for index in range(0, 10):
+        x1 = x + index * 40
+        x0 = x1 - 300
+        x2 = x1 + 300
+        x3 = x2 + 300
 
-    watermark_canvas.drawString(x, y, watermark)
+        watermark_canvas.drawString(x1, y + index * 100, watermark)
+        watermark_canvas.drawString(x2, y + index * 100, watermark)
+        watermark_canvas.drawString(x0, y + index * 100, watermark)
+
+   
     watermark_canvas.save()
 
     mask_stream.seek(0)
@@ -53,12 +65,10 @@ def annotate(filename, watermark, regex, font_name, font_size, color, opacity,
     src = PdfFileReader(filename)
     output = PdfFileWriter()
 
-    page = src.getPage(0)
-    page.mergePage(mask.getPage(0))
-    output.addPage(page)
-
-    for page in range(1, src.getNumPages()):
-        output.addPage(src.getPage(page))
+    for index in range(0, src.getNumPages()):
+        page = src.getPage(index)
+        page.mergePage(mask.getPage(0))
+        output.addPage(src.getPage(index))
 
     if not destination_file_name:
         destination_file_name = filename
