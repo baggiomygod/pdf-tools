@@ -1,53 +1,32 @@
-# Why?
-I needed to "stamp" quite a bunch of PDF files with a large transparent text mark.
-The mark content depended on the PDF file name. 
-I looked around and realised that I can't seem to be able to find anything that
-would help me get it done in Linux without major pain of some sort. So I decided 
-to roll my own
+一个可以通过命令行模式调用的给PDF打水印的简单应用
 
-# What it does. 
-`pdfwatermark` allows you to add an arbitrary text line on the first page of
-a given PDF file. You can also make the text of the watermark depend on the file
-name. 
+# 使用
 
-# Usage
+`$ python simplePdfWatermark.py [OPTIONS] FILENAME`
 
-`$ python pdfwatermark.py [OPTIONS] FILENAME`
+参数`--help` 查看详细参数介绍
 
-Use `--help` to see the detailed list of options
+## 提示
 
-## Warning
-By default, `pdfwatermark` watermarks the file in place. No way to 
-'unwatermark' it is provided.
+暂时没有去水印功能
 
 ## Example
 
-**Example 1, "trivial"**
+**固定文字水印**
 
-`python pdfwatermark.py -w "WATERMARK" file.pdf`
+`python simplePdfWatermark.py -w "WATERMARK" demo.pdf`
 
-Puts a large black text 'WATERMARK' somewhere on the first page of `file.pdf`
+**设置水印文字颜色 透明度 位置**
 
-**Example 2, "simple"**
+`python simplePdfWatermark.py -w "WATERMARK" -c "#FF0000" -o 0.3 -x 200 -y 150  demo.pdf`
 
-`python pdfwatermark.py -w "WATERMARK" -c "#FF0000" -o 0.3 -x 200 -y 150  file.pdf` 
+**输出新文件**
 
-Puts a large transparent pink 'WATERMARK' at the given coordinates 
-on the first page of `file.pdf`
+`python pdfwatermark.py -c "#FF0000" -o 0.3 -x 200 -y 150  -w "watermark-2021" -d out.pdf demo.pdf`
 
+# 打包
 
-**Example 2, "pdfwatermark in full glory"**
-
-`python pdfwatermark.py -c "#FF0000" -o 0.3 -x 200 -y 150  -w "({})" -r "^(\d+).+$" -d meaning.pdf 42-file.pdf`
-
-Puts a large transparent pink '(42)' at the given coordinates 
-on the first page of the content of `42-file.pdf` and saves the resulting content
-as `meaning.pdf` 
- 
-
-# Todo
-* add a possibility to add watermarks on pages other than first
-* make sure it works nicely with paper formats other than DIN A4
-* handle (at least some) errors
-
- 
+1. `pip install pyinstaller`
+2. `pyinstaller.exe ./simplePdfWater.py`
+3. 打包后输出在`dist`文件夹下
+4. 测试打包应用`.\dist\simplePdfWatermark\simplePdfWatermark.exe  -c "#FF0000" -o 0.3 -s 20 -x 180 -y 0 -w "zbd-watermark" -d D:\work\jyjs-projects\examples\pdfwatermark\files\water2.pdf D:\work\jyjs-projects\examples\pdfwatermark\files\1.pdf`

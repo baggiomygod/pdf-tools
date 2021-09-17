@@ -12,7 +12,7 @@ setuptools.setup(
                 "custom text using command line",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="",
+    url="git@github.com:baggiomygod/pdf-tools.git",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
