@@ -81,12 +81,14 @@ def annotate(filename, watermark, font_name, font_size, color, opacity,
             page = src.getPage(index)
             if (index + 1 == water_page_number):
                 page.mergePage(mask.getPage(0))
+                page.compressContentStreams()
             output.addPage(src.getPage(index))
     else:
         # 所有页面打水印
         for index in range(0, src.getNumPages()):
             page = src.getPage(index)
             page.mergePage(mask.getPage(0))
+            page.compressContentStreams()
             output.addPage(src.getPage(index))
 
     if not destination_file_name:
