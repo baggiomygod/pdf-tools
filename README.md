@@ -48,3 +48,7 @@ DEV:
 2. `pyinstaller.exe ./tools/pdfSplit/pdfSplit.py`
 3. 打包后输出在`dist`文件夹下
 4. 测试打包应用`.\dist\simplePdfWatermark\simplePdfWatermark.exe  -c "#FF0000" -o 0.3 -s 20 -x 180 -y 0 -w "zbd-watermark" -d D:\work\jyjs-projects\examples\pdfwatermark\files\water2.pdf D:\work\jyjs-projects\examples\pdfwatermark\files\1.pdf`
+
+
+
+<!-- C:\\Users\\admin\\Desktop\\exmple.docx C:\\Users\\admin\\Desktop\\exmple.pdf -->
